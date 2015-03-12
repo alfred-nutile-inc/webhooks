@@ -1,0 +1,33 @@
+{
+  "name": "alfred-nutile-inc/webhooks",
+  "description": "Package to quickly include webhooks in your system",
+  "keywords": [
+    "laravel",
+    "webhooks"
+  ],
+  "authors": [
+    {
+      "name": "Alfred Nutile",
+      "email": "me@alfrednutile.info"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "laravel/framework": "5.0.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0",
+    "mockery/mockery": "~0.8",
+    "guzzlehttp/guzzle": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "AlfredNutileInc\\Webhooks\\": "src/CoreApp/Webhooks/"
+    },
+    "classmap": [
+      "seeds",
+      "tests/TestCase.php"
+    ]
+  },
+  "license": "MIT"
+}
