@@ -22,13 +22,13 @@ class WebhooksSeeder extends Seeder
     {
 //        Webhook::create([
 //            'id'            => 'mock-1-webhook',
-//            'callback_url'  => env('WEBHOOK_SEED_CALLBACK_URL'),
+//            'callback_url'  => env('WEBHOOK_SEED_CALLBACK_URL', 'http://foo.com'),
 //            'event'         => 'eloquent.created: ScreenShooter\Models\ScreenshooterJob'
 //        ]);
 //
 //        Webhook::create([
 //            'id'            => 'mock-2-webhook',
-//            'callback_url'  => env('WEBHOOK_SEED_CALLBACK_URL_2'),
+//            'callback_url'  => env('WEBHOOK_SEED_CALLBACK_URL_2', 'http://foo.com'),
 //            'event'         => 'eloquent.created: ScreenShooter\Models\ScreenshooterJob'
 //        ]);
     }

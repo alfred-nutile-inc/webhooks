@@ -29,5 +29,6 @@
       "tests/TestCase.php"
     ]
   },
+  "minimum-stability": "dev",
   "license": "MIT"
 }
