@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "AlfredNutileInc\\Webhooks\\": "src/CoreApp/Webhooks/"
+      "AlfredNutileInc\\CoreApp\\Webhooks\\": "src/CoreApp/Webhooks/"
     },
     "classmap": [
       "tests/TestCase.php"
