@@ -11,13 +11,14 @@ namespace AlfredNutileInc\CoreApp\Webhooks;
 use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\App;
 
 class WebhooksServiceProvider extends ServiceProvider {
 
@@ -25,7 +26,9 @@ class WebhooksServiceProvider extends ServiceProvider {
     protected $webhooks;
     protected $firing;
     protected $event;
+    protected $model;
     protected $callbacks = [];
+    protected $cache;
     protected $pool;
     protected $requests = [];
     protected $options = ['verify' => false];
@@ -74,15 +77,15 @@ class WebhooksServiceProvider extends ServiceProvider {
      *
      * Observer in Model to Clear this when new webhooks added.
      */
-    protected function setWebhooks($webhooks = false)
+    public function setWebhooks($webhooks = false)
     {
         if($webhooks == false)
         {
-            $webhooks = Cache::rememberForever('webhooks', function()
+            $webhooks = $this->getCache()->rememberForever('webhooks', function()
             {
                 try
                 {
-                    return Webhook::all();
+                    return $this->getModel()->all();
                 } catch(\Exception $e)
                 {
                     return [];
@@ -157,7 +160,7 @@ class WebhooksServiceProvider extends ServiceProvider {
         $this->sendRequests();
     }
 
-    protected function buildRequestsPool()
+    public function buildRequestsPool()
     {
         foreach($this->callbacks as $callback)
         {
@@ -165,14 +168,14 @@ class WebhooksServiceProvider extends ServiceProvider {
                 ->createRequest(
                     'POST',
                     $callback['callback']->callback_url,
-                    [ 'body' => json_encode(serialize($callback['event'])), 'verify' => false]);
+                    [ 'body' => $this->createBody($callback['event']), 'verify' => false]);
             $this->setRequests($request);
         }
     }
 
     protected function createBody($body)
     {
-        return json_encode(serialize($body));
+        return ['data' => json_encode(serialize($body)), 'from' => url(), 'env' => App::environment()];
     }
 
     protected function sendRequests()
@@ -248,6 +251,46 @@ class WebhooksServiceProvider extends ServiceProvider {
     public function setOptions($key, $value)
     {
         $this->options[$key] = $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModel()
+    {
+        if($this->model == null)
+            $this->setModel();
+        return $this->model;
+    }
+
+    /**
+     * @param mixed $model
+     */
+    public function setModel($model = null)
+    {
+        if($model == null)
+            $model = new Webhook();
+        $this->model = $model;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCache()
+    {
+        if($this->cache == null)
+            $this->setCache();
+        return $this->cache;
+    }
+
+    /**
+     * @param mixed $cache
+     */
+    public function setCache($cache = null)
+    {
+        if($cache == null)
+            $cache = App::make('Illuminate\Contracts\Cache\Repository');
+        $this->cache = $cache;
     }
 
 
