@@ -118,6 +118,9 @@ event callbacks.
 You can make your own WebhooksWrapper class and extend the WebhooksServiceProvider and add more events.
 Then register your Provider over the above and they will be added as well.
 
+## Return values
+
+  * body will contain the model or event object json_encoded and serialized, the url, and the environment
 
 # Notes
 
