@@ -17,7 +17,7 @@
 Config::set('seeding', true);
 
 ~~~
-Right before you include you seeding class like this
+Right before you include your seeding class like this
 
 
 ~~~
@@ -41,6 +41,9 @@ public function run()
 	}
 }
 ~~~
+
+Just speeds up seed work as the events are ignored
+
 
 ### Add the commands to your Kernal.php
 
