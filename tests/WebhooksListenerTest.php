@@ -22,7 +22,7 @@ class WebhooksListenerTest extends \TestCase {
         //Arrange
         $provider = new WebhooksServiceProvider(new Application());
         $provider->setFiring('eloquent.updated: ScreenShooter\Models\ScreenshooterJob');
-        $job = m::creat();
+        $job = m::create();
         $job->status = 'done';
         $provider->setEvent($job);
 
