@@ -8,6 +8,17 @@
 'AlfredNutileInc\CoreApp\Webhooks\WebhooksServiceProvider'
 ~~~
 
+Run
+
+~~~
+php artisan vendor:publish
+~~~
+
+To publish the mirations
+
+Before you migrate keep reading...
+
+
 ### Add to your DatabaseSeeder.php
 
 ~~~
@@ -44,12 +55,16 @@ public function run()
 
 Just speeds up seed work as the events are ignored
 
+Now you can migrate
+
+~~~
+php artisan migrate
+~~~
 
 ### Add the commands to your Kernal.php
 
 ~~~
     protected $commands = [
-        'ScreenShooter\Console\Commands\InspireCommand',
         'AlfredNutileInc\CoreApp\Webhooks\Console\WebhookAddCommand',
         'AlfredNutileInc\CoreApp\Webhooks\Console\WebhookDeleteCommand'
     ];
