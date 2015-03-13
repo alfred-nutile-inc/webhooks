@@ -25,7 +25,6 @@
       "AlfredNutileInc\\Webhooks\\": "src/CoreApp/Webhooks/"
     },
     "classmap": [
-      "seeds",
       "tests/TestCase.php"
     ]
   },
