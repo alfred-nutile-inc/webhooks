@@ -21,11 +21,18 @@ Before you migrate keep reading...
 
 ### Add to your DatabaseSeeder.php
 
+
 ~~~
 /**
  * Used by Webhooks to prevent seed issues
  */
 Config::set('seeding', true);
+
+And copy over vendors/alfred-nutile-inc/webhooks/src/CoreApp/Webhooks/database/seeds/WebhooksSeeder.php to database/seeds
+
+If you want seed data place it in there. There are a couple of examples in there.
+
+@TODO remove the seeder step and make it part of publish
 
 ~~~
 Right before you include your seeding class like this
