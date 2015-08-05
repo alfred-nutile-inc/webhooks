@@ -136,6 +136,27 @@ event callbacks.
 You can make your own WebhooksWrapper class and extend the WebhooksServiceProvider and add more events.
 Then register your Provider over the above and they will be added as well.
 
+For example this extends the main provider to listen to other events
+
+~~~
+<?php
+
+namespace App\Providers;
+
+use AlfredNutileInc\CoreApp\Webhooks\WebhooksServiceProvider;
+
+class WebhookExtendedProvider extends WebhooksServiceProvider
+{
+
+    public $listening = [
+        'eloquent.*',
+        '\\App\\Events\\CampaignMadeActive',
+        '\\App\\Events\\MetaMasterUpdated'
+    ];
+}
+
+~~~
+
 ## Return values
 
   * body will contain the model or event object json_encoded and serialized, the url, and the environment
