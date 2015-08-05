@@ -9,7 +9,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class WebhookAddCommand extends Command {
 	use UuidHelper;
-	protected $name = 'core-app:webhook-add';
+	
+        protected $signature = 'core-app:webhook-add {url : Url to callback to} {event: Even in single quotes to list for eg \'\\App\\Events\\UserCreated\\\'}';
 
 	protected $description = 'Add a webhook to the system';
 	protected $url;
@@ -25,7 +26,7 @@ class WebhookAddCommand extends Command {
 	public function fire()
 	{
 
-		$this->url 		= $this->argument('url');
+		$this->url      = $this->argument('url');
 		$this->event 	= $this->argument('event');
 
 		try {
@@ -40,14 +41,6 @@ class WebhookAddCommand extends Command {
 		{
 			$this->error(sprintf("Error adding webhook to database %s", $e->getMessage()));
 		}
-	}
-
-	public function getArguments()
-	{
-		return [
-			['url', InputArgument::REQUIRED, "Full POST url to send callback info to"],
-			['event', InputArgument::REQUIRED, "Event to listen to eg 'eloquent.updated: ScreenShooter\\Models\\ScreenshooterJob'"]
-		];
 	}
 
 }
